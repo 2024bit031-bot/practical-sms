@@ -1,0 +1,175 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+
+class Student {
+
+    private String name;
+    private String regNo;
+    private String contactNo;
+
+    public Student(String name, String regNo, String contactNo) {
+        this.name = name;
+        this.regNo = regNo;
+        this.contactNo = contactNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRegNo() {
+        return regNo;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public void displayStudent() {
+        System.out.println("------------------------");
+        System.out.println("Name: " + name);
+        System.out.println("Reg No: " + regNo);
+        System.out.println("Contact No: " + contactNo);
+        System.out.println("------------------------");
+    }
+}
+
+
+class Management {
+
+    ArrayList<Student> students = new ArrayList<>();
+
+    // Add Student
+    public void addStudent(Student s) {
+        students.add(s);
+        System.out.println("Student Added Successfully!");
+    }
+
+    // Show all students
+    public void showStudents() {
+
+        if (students.isEmpty()) {
+            System.out.println("No Students Found.");
+            return;
+        }
+
+        for (Student s : students) {
+            s.displayStudent();
+        }
+    }
+
+    // Search Student by RegNo
+    public void searchStudent(String regNo) {
+
+        for (Student s : students) {
+
+            if (s.getRegNo().equals(regNo)) {
+                s.displayStudent();
+                return;
+            }
+        }
+
+        System.out.println("Student Not Found.");
+    }
+
+    // Update Contact
+    public void updateContact(String regNo, String newContact) {
+
+        for (Student s : students) {
+
+            if (s.getRegNo().equals(regNo)) {
+                s.setContactNo(newContact);
+                System.out.println("Contact Updated.");
+                return;
+            }
+        }
+
+        System.out.println("Student Not Found.");
+    }
+}
+
+public class SMS {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Management management = new Management();
+
+        while (true) {
+
+            System.out.println("\n===== STUDENT MANAGEMENT SYSTEM =====");
+            System.out.println("1. Add Student");
+            System.out.println("2. Show All Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Update Contact");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter Choice: ");
+            int choice = sc.nextInt();
+
+            sc.nextLine(); // clear buffer
+
+            switch (choice) {
+
+                case 1:
+
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Reg No: ");
+                    String reg = sc.nextLine();
+
+                    System.out.print("Enter Contact No: ");
+                    String contact = sc.nextLine();
+
+                    Student s = new Student(name, reg, contact);
+
+                    management.addStudent(s);
+
+                    break;
+
+                case 2:
+
+                    management.showStudents();
+
+                    break;
+
+                case 3:
+
+                    System.out.print("Enter Reg No to Search: ");
+                    String searchReg = sc.nextLine();
+
+                    management.searchStudent(searchReg);
+
+                    break;
+
+                case 4:
+
+                    System.out.print("Enter Reg No: ");
+                    String regNo = sc.nextLine();
+
+                    System.out.print("Enter New Contact: ");
+                    String newContact = sc.nextLine();
+
+                    management.updateContact(regNo, newContact);
+
+                    break;
+
+                case 5:
+
+                    System.out.println("Exiting Program...");
+                    System.exit(0);
+
+                default:
+
+                    System.out.println("Invalid Choice!");
+
+            }
+        }
+    }
+}
